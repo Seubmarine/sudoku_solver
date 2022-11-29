@@ -35,12 +35,12 @@ void	print_buffer(int buffer[9])
 	printf("\n");
 }
 
-void	sudoku_get_row(int x, int y, int buffer[9], int sudoku_board[9][9])
+void	sudoku_get_row(int y, int buffer[9], int sudoku_board[9][9])
 {
 	memcpy(buffer, &sudoku_board[y][0], sizeof(int) * 9);
 }
 
-void	sudoku_get_column(int x, int y, int buffer[9], int sudoku_board[9][9])
+void	sudoku_get_column(int x, int buffer[9], int sudoku_board[9][9])
 {
 	for (size_t i = 0; i < 9; i++)
 	{
@@ -61,35 +61,14 @@ void	sudoku_get_box(int x, int y, int buffer[9], int sudoku_board[9][9])
 int	sudoku_is_valid_at_index(int x, int y, int sudoku_board[9][9])
 {
 	int buffer[9] = {};
-	sudoku_get_row(x, y, buffer, sudoku_board);
+	sudoku_get_row(y, buffer, sudoku_board);
 	if (!sudoku_is_nine_different_number(buffer))
 		return (0);
-	sudoku_get_column(x, y, buffer, sudoku_board);
+	sudoku_get_column(x, buffer, sudoku_board);
 	if (!sudoku_is_nine_different_number(buffer))
 		return (0);
 	sudoku_get_box(x, y, buffer, sudoku_board);
 	if (!sudoku_is_nine_different_number(buffer))
 		return (0);
 	return (1);
-}
-
-int main(int argc, char const *argv[])
-{
-	int sudoku[9][9] = {{0, 7, 0,  0, 0, 9,  0, 0, 0},
-						{2, 3, 6,  0, 0, 0,  7, 0, 8},
-						{0, 5, 0,  2, 0, 0,  0, 0, 0},
-
-						{0, 9, 0,  0, 0, 6,  2, 0, 0},
-						{6, 0, 0,  0, 2, 0,  0, 0, 0},
-						{0, 0, 0,  5, 1, 8,  4, 0, 0},
-						
-						{0, 0, 0,  0, 0, 1,  0, 3, 0},
-						{0, 6, 0,  8, 0, 0,  0, 5, 2},
-						{0, 0, 0,  0, 9, 0,  0, 0, 1},
-						};
-	int x = 3;
-	int	y = 5;
-	int is_valid = sudoku_is_valid_at_index(x, y, sudoku);
-	printf("is_valid = %i\n", is_valid);
-	return 0;
 }
